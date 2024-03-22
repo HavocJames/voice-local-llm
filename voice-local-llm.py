@@ -9,13 +9,10 @@ import pyttsx3
 import pyaudio
 import json
 
-
 sttmodel = Model(r"/home/ai-project/aiproject/myai/models/vosk-model-en-in-0.5")
-#model = Model(r"/home/ai-project/aiproject/myai/models/vosk-model-small-en-in-0.4")
 recogniser = KaldiRecognizer(sttmodel, 16000)
 mic = pyaudio.PyAudio()
 sttstream = mic.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
-
 
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
@@ -45,9 +42,7 @@ Assistant:"""+" [/INST]"
 
 prompt = PromptTemplate(input_variables=["question"], template=prompt_template)
 llm = LlamaCpp(**kwargs)
- 
 llm_chain = LLMChain(prompt=prompt, llm=llm,)
-
 
 def tts(text):  
     sttstream.stop_stream() 
@@ -56,7 +51,6 @@ def tts(text):
     engine.setProperty('rate', rate-50)
     engine.say(text)
     engine.runAndWait()
-
 
 def stt():
     sttstream.start_stream()
